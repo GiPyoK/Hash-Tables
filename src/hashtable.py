@@ -54,19 +54,38 @@ class HashTable:
         # Part 2: Change this so that hash collisions are handled with Linked List Chaining.
         '''
         # Check if HashTable has enough capacity
-        if self.count >= self.capacity:
-            self.resize()
+        # if self.count >= self.capacity:
+        #     self.resize()
+
+        index = self._hash_mod(key)
 
         # Part 1: Error handling
-        index = self._hash_mod(key)
-        if self.storage[index]:
-            print(f"Index {index} already exists in the hash table.\nUnable to insert <{key} : {value}>")
-            return
+        # if self.storage[index]:
+        #     print(f"Index {index} already exists in the hash table.\nUnable to insert <{key} : {value}>")
+        #     return
         
         # Part 2: Linked List Chaining
+        if self.storage[index]:
+            # Point to tail
+            node = self.storage[index]
 
+            while node != None:
+                # if the key already exists, overwirte
+                if node.key == self._hash(key):
+                    node.value = value
+                    return
+                
+                if node.next == None:
+                    break
+                node = node.next
+            
+            # Insert the key value pair at the tail
+            node.next = LinkedPair(self._hash(key), value)
+            self.count += 1
+            return
+            
         # insert key value pair
-        self.storage[index] = LinkedPair(key, value)
+        self.storage[index] = LinkedPair(self._hash(key), value)
         self.count += 1
 
 
@@ -97,7 +116,7 @@ class HashTable:
             return
 
         while node != None:
-            if node.key == key:
+            if node.key == self._hash(key):
                 prev.next = node.next
                 self.count -= 1
                 return
@@ -120,7 +139,7 @@ class HashTable:
         # Loop through the linked list to find the key
         node = self.storage[index]
         while node != None:
-            if node.key == key:
+            if node.key == self._hash(key):
                 return node.value
             node = node.next
         
@@ -137,7 +156,7 @@ class HashTable:
 
         # Allocate new memory
         new_storage = [None] * self.capacity
-        
+
         # Copy the old data into the new storage
         for i in range(self.count):
             new_storage[i] = self.storage[i]
@@ -146,30 +165,52 @@ class HashTable:
 
 
 
-if __name__ == "__main__":
-    ht = HashTable(2)
+# if __name__ == "__main__":
+#     ht = HashTable(2)
 
-    ht.insert("line_1", "Tiny hash table")
-    ht.insert("line_2", "Filled beyond capacity")
-    ht.insert("line_3", "Linked list saves the day!")
+#     ht.insert("line_1", "Tiny hash table")
+#     ht.insert("line_2", "Filled beyond capacity")
+#     ht.insert("line_3", "Linked list saves the day!")
 
-    print("")
+#     print("")
 
-    # Test storing beyond capacity
-    print(ht.retrieve("line_1"))
-    print(ht.retrieve("line_2"))
-    print(ht.retrieve("line_3"))
+#     # Test storing beyond capacity
+#     print(ht.retrieve("line_1"))
+#     print(ht.retrieve("line_2"))
+#     print(ht.retrieve("line_3"))
 
-    # Test resizing
-    old_capacity = len(ht.storage)
-    ht.resize()
-    new_capacity = len(ht.storage)
+#     # Test resizing
+#     old_capacity = len(ht.storage)
+#     ht.resize()
+#     new_capacity = len(ht.storage)
 
-    print(f"\nResized from {old_capacity} to {new_capacity}.\n")
+#     print(f"\nResized from {old_capacity} to {new_capacity}.\n")
 
-    # Test if data intact after resizing
-    print(ht.retrieve("line_1"))
-    print(ht.retrieve("line_2"))
-    print(ht.retrieve("line_3"))
+#     # Test if data intact after resizing
+#     print(ht.retrieve("line_1"))
+#     print(ht.retrieve("line_2"))
+#     print(ht.retrieve("line_3"))
 
-    print("")
+#     print("")
+
+
+ht = HashTable(4)
+ht.insert("key1", "1")
+ht.insert("key2", "2")
+ht.insert("key3", "3")
+ht.insert("key4", "4")
+
+print(ht.retrieve("key1"))
+print(ht.retrieve("key2"))
+print(ht.retrieve("key3"))
+print(ht.retrieve("key4"))
+
+ht.insert("key1", "11")
+ht.insert("key2", "22")
+ht.insert("key3", "33")
+ht.insert("key4", "44")
+
+print(ht.retrieve("key1"))
+print(ht.retrieve("key2"))
+print(ht.retrieve("key3"))
+print(ht.retrieve("key4"))
