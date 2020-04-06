@@ -52,8 +52,6 @@ class HashTable:
         # investigate the impact this will have on the tests)
 
         # Part 2: Change this so that hash collisions are handled with Linked List Chaining.
-
-        Fill this in.
         '''
         # Check if HashTable has enough capacity
         if self.count >= self.capacity:
@@ -78,8 +76,6 @@ class HashTable:
         Remove the value stored with the given key.
 
         Print a warning if the key is not found.
-
-        Fill this in.
         '''
         # Find the index
         index = self._hash_mod(key)
@@ -117,9 +113,20 @@ class HashTable:
         Retrieve the value stored with the given key.
 
         Returns None if the key is not found.
-
-        Fill this in.
         '''
+        # Find index
+        index = self._hash_mod(key)
+
+        # Loop through the linked list to find the key
+        node = self.storage[index]
+        while node != None:
+            if node.key == key:
+                return node.value
+            node = node.next
+        
+        # If the key was not found, return None
+        return None
+
         pass
 
 
