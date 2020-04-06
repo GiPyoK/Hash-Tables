@@ -110,7 +110,7 @@ class HashTable:
         prev = head
 
         # if the first linked list has the key
-        if prev.key == key:
+        if prev.key == self._hash(key):
             self.storage[index] = node
             self.count -= 1
             return
@@ -165,52 +165,55 @@ class HashTable:
 
 
 
-# if __name__ == "__main__":
-#     ht = HashTable(2)
+if __name__ == "__main__":
+    ht = HashTable(2)
 
-#     ht.insert("line_1", "Tiny hash table")
-#     ht.insert("line_2", "Filled beyond capacity")
-#     ht.insert("line_3", "Linked list saves the day!")
+    ht.insert("line_1", "Tiny hash table")
+    ht.insert("line_2", "Filled beyond capacity")
+    ht.insert("line_3", "Linked list saves the day!")
 
-#     print("")
+    print("")
 
-#     # Test storing beyond capacity
-#     print(ht.retrieve("line_1"))
-#     print(ht.retrieve("line_2"))
-#     print(ht.retrieve("line_3"))
+    # Test storing beyond capacity
+    print(ht.retrieve("line_1"))
+    print(ht.retrieve("line_2"))
+    print(ht.retrieve("line_3"))
 
-#     # Test resizing
-#     old_capacity = len(ht.storage)
-#     ht.resize()
-#     new_capacity = len(ht.storage)
+    # Test resizing
+    old_capacity = len(ht.storage)
+    ht.resize()
+    new_capacity = len(ht.storage)
 
-#     print(f"\nResized from {old_capacity} to {new_capacity}.\n")
+    print(f"\nResized from {old_capacity} to {new_capacity}.\n")
 
-#     # Test if data intact after resizing
-#     print(ht.retrieve("line_1"))
-#     print(ht.retrieve("line_2"))
-#     print(ht.retrieve("line_3"))
+    # Test if data intact after resizing
+    print(ht.retrieve("line_1"))
+    print(ht.retrieve("line_2"))
+    print(ht.retrieve("line_3"))
 
-#     print("")
+    print("")
 
 
-ht = HashTable(4)
-ht.insert("key1", "1")
-ht.insert("key2", "2")
-ht.insert("key3", "3")
-ht.insert("key4", "4")
+# ht = HashTable(4)
+# ht.insert("key1", "1")
+# ht.insert("key2", "2")
+# ht.insert("key3", "3")
+# ht.insert("key4", "4")
 
-print(ht.retrieve("key1"))
-print(ht.retrieve("key2"))
-print(ht.retrieve("key3"))
-print(ht.retrieve("key4"))
+# print(ht.retrieve("key1"))
+# print(ht.retrieve("key2"))
+# print(ht.retrieve("key3"))
+# print(ht.retrieve("key4"))
 
-ht.insert("key1", "11")
-ht.insert("key2", "22")
-ht.insert("key3", "33")
-ht.insert("key4", "44")
+# ht.insert("key1", "11")
+# ht.insert("key2", "22")
+# ht.insert("key3", "33")
+# ht.insert("key4", "44")
 
-print(ht.retrieve("key1"))
-print(ht.retrieve("key2"))
-print(ht.retrieve("key3"))
-print(ht.retrieve("key4"))
+# print(ht.retrieve("key1"))
+# print(ht.retrieve("key2"))
+# print(ht.retrieve("key3"))
+# print(ht.retrieve("key4"))
+
+# ht.remove("key1")
+# print(ht.retrieve("key1"))
