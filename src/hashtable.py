@@ -54,7 +54,17 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+
+        # Part 1: Error handling
+        index = self._hash_mod(key)
+        if self.storage[index]:
+            print(f"Index {index} already exists in the hash table.\nUnable to insert <{key} : {value}>")
+            return
+        
+        # Part 2: Linked List Chaining
+
+        # insert key value pair
+        self.storage[index] = LinkedPair(key, value)
 
 
 
@@ -66,7 +76,33 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        # Find the index
+        index = self._hash_mod(key)
+
+        # Check if the key exists
+        if self.storage[index] == None:
+            print(f"Key: {key} does not exists.")
+            return
+        
+        # Remove the value
+        head = self.storage[index]
+        node = head.next
+        prev = head
+
+        # if the first linked list has the key
+        if prev.key == key:
+            self.storage[index] = node
+            return
+
+        while node != None:
+            if node.key == key:
+                prev.next = node.next
+                return
+            node = node.next
+            prev = prev.next
+
+        # All of key value pair in the linked list have been traversed, key was not found
+        print(f"Key: {key} does not exists.")
 
 
     def retrieve(self, key):
