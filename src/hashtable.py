@@ -127,17 +127,22 @@ class HashTable:
         # If the key was not found, return None
         return None
 
-        pass
-
-
     def resize(self):
         '''
         Doubles the capacity of the hash table and
         rehash all key/value pairs.
-
-        Fill this in.
         '''
-        pass
+        # Double the capacity
+        self.capacity *= 2
+
+        # Allocate new memory
+        new_storage = [None] * self.capacity
+        
+        # Copy the old data into the new storage
+        for i in range(self.count):
+            new_storage[i] = self.storage[i]
+        self.storage = new_storage
+
 
 
 
